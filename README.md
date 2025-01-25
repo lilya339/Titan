@@ -33,8 +33,5 @@ PORT = 5000
 MONGO_CONNECTION = mongodb+srv://<db_username>:<db_password>@cluster0.xttom.mongodb.net/
 ```
 
-### Additional data:
-- Server is running on port 5000
-
 #### License
 MIT
