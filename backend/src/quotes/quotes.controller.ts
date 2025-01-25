@@ -10,7 +10,7 @@ export class QuotesController {
     constructor(private service: QuotesService) { }
 
     @Get('')
-    async get_quotes(@Query() params: { count: string }, @Res() response: Response) {
+    async get_quotes(@Query() params: { count: string, tags: string }, @Res() response: Response) {
 
         try {
             const count = parseInt(params.count);
@@ -21,7 +21,9 @@ export class QuotesController {
                 return;
             }
 
-            const quotes = await this.service.getQuotes(count);
+            const tags = params.tags ? params.tags.split(',') : [];
+
+            const quotes = await this.service.getQuotes(count, tags);
 
             response
                 .status(StatusCodes.OK)
@@ -34,9 +36,16 @@ export class QuotesController {
         }
     }
 
+
+    @Get('tags')
+    async getTags() {
+        return await this.service.getTags();
+    }
+
+
     @Get('fill')
     async fillQuotes() {
-        this.service.fillQuotesToDB();
+        return await this.service.fillQuotesToDB();
     }
 
 }

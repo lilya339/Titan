@@ -42,10 +42,16 @@ export default class QuotesServer {
         })
     }
 
-    public async getQuotes(count: number) {
+    public async getTagsList() {
+        const response = await this.axiosInstance.get<iServerRespnose<Array<string>>>('/api/quotes/tags');
+
+        return response.data;
+    }
+    public async getQuotes(count: number, tags: Array<string>) {
 
         try {
-            const response = await this.axiosInstance.get<iServerRespnose<Array<iQuote>>>(`/api/quotes?count=${count}`);
+            const tagsPath = tags.join(',');
+            const response = await this.axiosInstance.get<iServerRespnose<Array<iQuote>>>(`/api/quotes?count=${count}&tags=${tagsPath}`);
             return response.data;
 
         } catch (error: any) {

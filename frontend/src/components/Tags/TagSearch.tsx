@@ -1,8 +1,9 @@
 import { Autocomplete, TextField } from "@mui/material"
 import Tag from "./Tag";
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import QuotesServer from "../../server/QuotesServer";
 
-const TAGS = ["life", "power", "moment", "chance", "photographer", "wisdom", "truth"]
+const DEFAULT_TAGS = ["life", "power", "moment", "chance", "photographer", "wisdom", "truth"]
 
 interface iTagSearchProps {
     className?: string;
@@ -12,6 +13,23 @@ interface iTagSearchProps {
 
 export default function TagSearch(props: iTagSearchProps) {
 
+    const [tagsList, setTagsList] = useState<Array<string>>([]);
+
+    async function initTagsList() {
+
+        try {
+            const quotesServer = new QuotesServer();
+            const response = await quotesServer.getTagsList();
+            setTagsList(response.data);
+
+        } catch (error) {
+            setTagsList(DEFAULT_TAGS)
+        }
+    }
+    useEffect(() => {
+        initTagsList();
+
+    }, []);
 
     function onSearchChanged(_event: any, newValue: string | null) {
         const newTags = [...props.tags];
@@ -41,7 +59,7 @@ export default function TagSearch(props: iTagSearchProps) {
             <Autocomplete
                 onChange={onSearchChanged}
                 className="w-100"
-                options={TAGS}
+                options={tagsList}
                 renderInput={(params) => <TextField {...params} label="Tag" size="small" />}
             />
 

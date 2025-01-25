@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { TextField, Button, styled } from '@mui/material';
+import { TextField, Button, styled, Alert } from '@mui/material';
 import Quote from '../Quote/Quote';
 import QuotesServer, { iQuote } from '../../server/QuotesServer';
 import TagSearch from '../Tags/TagSearch';
@@ -19,6 +19,7 @@ export default function Content() {
     const [quotes, setQuotes] = useState<Array<iQuote>>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [tags, setTags] = useState<string[]>([]);
+    const [error, setError] = useState<string | null>("Error occurred while fetching quotes, please try again");
 
     const quotesServer = new QuotesServer();
     const onChangeQuotes = (e) => {
@@ -29,17 +30,15 @@ export default function Content() {
 
         setIsLoading(true);
 
-        quotesServer.getQuotes(quotesCount).then((quotes) => {
+        quotesServer.getQuotes(quotesCount, tags).then((quotes) => {
 
             setQuotes(quotes.data);
 
 
-        }).catch((error) => {
-
-            console.log(error);
+        }).catch(() => {
+            setError("Error occurred while fetching quotes, please try again");
 
         }).finally(() => {
-            console.log('finally');
             setIsLoading(false);
         });;
 
@@ -52,9 +51,9 @@ export default function Content() {
     }
 
     return (
-        <div className='w-100 d-flex flex-column justify-content-center align-items-center' >
+        <div className='p-3 w-100 d-flex flex-column justify-content-center align-items-center gap-4' >
 
-            <div className='p-3 w-100 d-flex' style={{ gap: '1rem' }}>
+            <div className='w-100 d-flex' style={{ gap: '1rem' }}>
 
                 <TextField
                     size='small'
@@ -75,13 +74,17 @@ export default function Content() {
 
             </div>
 
-            <TagSearch className="w-100 p-3  " tags={tags} setTags={setTags} />
-
+            <TagSearch className="w-100   " tags={tags} setTags={setTags} />
 
             {(!isLoading && quotes.length > 0) &&
                 <div className='p-3 d-flex flex-column justify-content-center align-items-center' style={{ gap: '1rem' }}>
                     {getQuotesObjects()}
                 </div>
+            }
+
+            {!isLoading && error != null &&
+
+                <Alert className='w-100' severity="error" >{error}</Alert>
             }
         </div>
 
