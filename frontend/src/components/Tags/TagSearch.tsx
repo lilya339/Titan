@@ -1,7 +1,8 @@
-import { Autocomplete, TextField } from "@mui/material"
+import { Autocomplete } from "@mui/material"
 import Tag from "./Tag";
 import { useEffect, useState } from "react";
 import QuotesServer from "../../server/QuotesServer";
+import { StyledTextField } from "../Content/ContentStyles";
 
 const DEFAULT_TAGS = ["life", "power", "moment", "chance", "photographer", "wisdom", "truth"]
 
@@ -59,7 +60,7 @@ export default function TagSearch(props: iTagSearchProps) {
                 onChange={onSearchChanged}
                 className="w-100"
                 options={tagsList}
-                renderInput={(params) => <TextField {...params} label="Select tags..." size="small" />}
+                renderInput={(params) => <StyledTextField {...params} label="Select tags" size="small" />}
             />
 
             {props.tags.length > 0 && <div className="d-flex gap-2 mt-2 flex-wrap">

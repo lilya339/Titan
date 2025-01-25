@@ -1,25 +1,5 @@
-import styled from "styled-components";
 import CloseIcon from '@mui/icons-material/Close';
-import { StyledTag } from "./TagsStyles";
-
-const StyledChip = styled(StyledTag)({
-
-    "&.MuiChip-root": {
-        cursor: 'pointer',
-        color: "var(--text-light)",
-        backgroundColor: `var(--primary-color-light)`,
-
-        "&:hover": {
-            "& .MuiChip-icon": {
-                fill: "var(--gray)",
-            }
-        },
-
-        "& .MuiChip-icon": {
-            fill: "var(--background-light)",
-        }
-    },
-});
+import { StyledChip } from "./TagsStyles";
 
 interface iTagProps {
     label: string;

@@ -9,3 +9,23 @@ export const StyledTag = styled(Chip)({
         border: 'none'
     }
 });
+
+export const StyledChip = styled(StyledTag)({
+
+    "&.MuiChip-root": {
+        cursor: 'pointer',
+        color: "var(--text-light)",
+        backgroundColor: `var(--primary-color-light)`,
+
+        "&:hover": {
+            "& .MuiChip-icon": {
+                fill: "var(--gray)",
+            }
+        },
+
+        "& .MuiChip-icon": {
+            fill: "var(--background-light)",
+        }
+    },
+});
+

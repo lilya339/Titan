@@ -1,19 +1,11 @@
-import { useState } from 'react'
-import { TextField, Button, styled, Alert } from '@mui/material';
+import { KeyboardEventHandler, useState } from 'react'
+import { Alert } from '@mui/material';
 import Quote from '../Quote/Quote';
 import QuotesServer, { iQuote } from '../../server/QuotesServer';
 import TagSearch from '../Tags/TagSearch';
+import { StyledButton, StyledTextField } from './ContentStyles';
 
-const StyledButton = styled(Button)({
-    "&.MuiButton-root": {
-        backgroundColor: `var(--primary-color)`,
-        color: `var(--white)`,
-        "&:hover": {
-            backgroundColor: `var(--primary-color-dark)`,
-        }
-    }
-});
-
+const MAX_COUNT = 100;
 export default function Content() {
     const [quotesCount, setQuotesCount] = useState(1);
     const [quotes, setQuotes] = useState<Array<iQuote>>([]);
@@ -24,7 +16,9 @@ export default function Content() {
     const quotesServer = new QuotesServer();
 
     const onChangeQuotes = (e) => {
-        setQuotesCount(parseInt(e.target.value));
+        const newCount = parseInt(e.target.value);
+
+        setQuotesCount(Math.max(0, Math.min(MAX_COUNT, newCount)));
     }
 
     async function onClickQuotesHandler() {
@@ -50,18 +44,24 @@ export default function Content() {
         })
     }
 
+    function onKeyUpCaptureHandler(e) {
+        if (e.key.toLowerCase() === "enter") {
+            onClickQuotesHandler();
+        }
+    }
+
     return (
         <div className='content' >
-
             <div className='controls-header'>
                 <div className='controls'>
 
-                    <TextField
+                    <StyledTextField
                         size='small'
                         label="Quotes number"
                         variant="outlined"
                         value={quotesCount}
                         type='number'
+                        onKeyUpCapture={onKeyUpCaptureHandler}
                         onChange={onChangeQuotes} />
 
                     <StyledButton

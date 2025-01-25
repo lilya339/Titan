@@ -6,7 +6,7 @@ export const StyledQuote = styled.div`
     padding:  16px 30px;
     box-shadow: 0 0 15px 0 rgba(0,0,0,0.1);
     border-radius: 6px;
-    max-width: 600px;
+    width: 600px;
 
     .tags{
         display:flex;
@@ -30,7 +30,7 @@ export const StyledQuote = styled.div`
             justify-content: end;
             font-size: 0.8rem;
             font-weight: 300;
-            color: #666;
+            color: var(--gray);
         }
     }    
 `
