@@ -5,7 +5,7 @@ import { StyledQuote } from './QuoteStyles';
 
 export default function Quote(props: { quote: iQuote }) {
     return (
-        <StyledQuote>
+        <StyledQuote className='styled-quote'>
             <div className='tags'>
                 {props.quote.tags.map((tag) => {
                     return <StyledTag label={tag} key={tag} />

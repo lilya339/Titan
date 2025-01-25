@@ -6,7 +6,13 @@ export const StyledQuote = styled.div`
     padding:  16px 30px;
     box-shadow: 0 0 15px 0 rgba(0,0,0,0.1);
     border-radius: 6px;
-    width: 600px;
+    /* width: 600px; */
+    width: 45%;
+
+
+    @media screen and (max-width: 1200px) { 
+        width: 100% !important;
+    }
 
     .tags{
         display:flex;
