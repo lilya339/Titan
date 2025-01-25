@@ -6,7 +6,6 @@ import QuotesServer from "../../server/QuotesServer";
 const DEFAULT_TAGS = ["life", "power", "moment", "chance", "photographer", "wisdom", "truth"]
 
 interface iTagSearchProps {
-    className?: string;
     tags: Array<string>;
     setTags: (tags: Array<string>) => void;
 }
@@ -54,16 +53,16 @@ export default function TagSearch(props: iTagSearchProps) {
     }
 
     return (
-        <div className={`${props.className} gap-2`}>
+        <div className="w-100 gap-2 d-flex flex-column">
 
             <Autocomplete
                 onChange={onSearchChanged}
                 className="w-100"
                 options={tagsList}
-                renderInput={(params) => <TextField {...params} label="Tag" size="small" />}
+                renderInput={(params) => <TextField {...params} label="Select tags..." size="small" />}
             />
 
-            {props.tags.length > 0 && <div className="d-flex gap-2 mt-2">
+            {props.tags.length > 0 && <div className="d-flex gap-2 mt-2 flex-wrap">
                 {getSelectedTags()}
             </div>}
 

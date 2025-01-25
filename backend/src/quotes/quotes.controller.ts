@@ -22,7 +22,6 @@ export class QuotesController {
             }
 
             const tags = params.tags ? params.tags.split(',') : [];
-
             const quotes = await this.service.getQuotes(count, tags);
 
             response
@@ -36,16 +35,24 @@ export class QuotesController {
         }
     }
 
-
     @Get('tags')
-    async getTags() {
-        return await this.service.getTags();
-    }
+    async getTags(@Res() response: Response) {
+        try {
 
+            const tags = await this.service.getTags();
+            response
+                .status(StatusCodes.OK)
+                .json({ "message": "tags fetched successfully", data: tags });
+
+        } catch (error) {
+            response
+                .status(StatusCodes.INTERNAL_SERVER_ERROR)
+                .json({ "message": "Internal server error" });
+        }
+    }
 
     @Get('fill')
     async fillQuotes() {
         return await this.service.fillQuotesToDB();
     }
-
 }

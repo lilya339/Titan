@@ -1,8 +1,6 @@
-
 export default function Layout({ children }) {
-
     return (
-        <div className='w-100 justify-content-center d-flex'>
+        <div className='main-content' >
             <main>{children}</main>
         </div>
     )

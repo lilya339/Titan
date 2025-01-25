@@ -33,8 +33,9 @@ export class QuotesService {
         ]);
 
         const tags = distinctTags.map(item => item.tag);
-        return { message: "tags fetched successfully", data: tags };
+        return tags;
     }
+
     public async getQuotes(count: number, tags: Array<string>) {
 
         const pipeline = new Array<Object>;

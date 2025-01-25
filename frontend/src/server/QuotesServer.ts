@@ -50,8 +50,9 @@ export default class QuotesServer {
     public async getQuotes(count: number, tags: Array<string>) {
 
         try {
-            const tagsPath = tags.join(',');
-            const response = await this.axiosInstance.get<iServerRespnose<Array<iQuote>>>(`/api/quotes?count=${count}&tags=${tagsPath}`);
+
+            const tagsPath = tags.length > 0 ? `&tags=${tags.join(',')}` : '';
+            const response = await this.axiosInstance.get<iServerRespnose<Array<iQuote>>>(`/api/quotes?count=${count}${tagsPath}`);
             return response.data;
 
         } catch (error: any) {

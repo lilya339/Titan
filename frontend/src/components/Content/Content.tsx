@@ -19,9 +19,10 @@ export default function Content() {
     const [quotes, setQuotes] = useState<Array<iQuote>>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [tags, setTags] = useState<string[]>([]);
-    const [error, setError] = useState<string | null>("Error occurred while fetching quotes, please try again");
+    const [error, setError] = useState<string | null>(null);
 
     const quotesServer = new QuotesServer();
+
     const onChangeQuotes = (e) => {
         setQuotesCount(parseInt(e.target.value));
     }
@@ -31,17 +32,16 @@ export default function Content() {
         setIsLoading(true);
 
         quotesServer.getQuotes(quotesCount, tags).then((quotes) => {
-
             setQuotes(quotes.data);
-
+            setError(null);
 
         }).catch(() => {
+            setQuotes([]);
             setError("Error occurred while fetching quotes, please try again");
 
         }).finally(() => {
             setIsLoading(false);
-        });;
-
+        });
     }
 
     function getQuotesObjects() {
@@ -51,40 +51,39 @@ export default function Content() {
     }
 
     return (
-        <div className='p-3 w-100 d-flex flex-column justify-content-center align-items-center gap-4' >
+        <div className='content' >
 
-            <div className='w-100 d-flex' style={{ gap: '1rem' }}>
+            <div className='controls-header'>
+                <div className='controls'>
 
-                <TextField
-                    size='small'
-                    className='w-50'
-                    label="Quotes number"
-                    variant="outlined"
-                    value={quotesCount}
-                    type='number'
-                    onChange={onChangeQuotes} />
+                    <TextField
+                        size='small'
+                        label="Quotes number"
+                        variant="outlined"
+                        value={quotesCount}
+                        type='number'
+                        onChange={onChangeQuotes} />
 
-                <StyledButton
-
-                    loading={isLoading}
-                    loadingPosition="start"
-                    className={`w-50  ${isLoading ? "disabled" : ""}`} variant="contained" onClick={onClickQuotesHandler}>
-                    {isLoading ? "Loading quotes..." : "Generate quotes"}
-                </StyledButton>
-
+                    <StyledButton
+                        loading={isLoading}
+                        loadingPosition="start"
+                        className={`${isLoading ? "disabled" : ""}`}
+                        variant="contained"
+                        onClick={onClickQuotesHandler}>
+                        {isLoading ? "Loading quotes..." : "Generate quotes"}
+                    </StyledButton>
+                </div>
+                <TagSearch tags={tags} setTags={setTags} />
             </div>
 
-            <TagSearch className="w-100   " tags={tags} setTags={setTags} />
-
             {(!isLoading && quotes.length > 0) &&
-                <div className='p-3 d-flex flex-column justify-content-center align-items-center' style={{ gap: '1rem' }}>
+                <div className='quotes-container' >
                     {getQuotesObjects()}
                 </div>
             }
 
             {!isLoading && error != null &&
-
-                <Alert className='w-100' severity="error" >{error}</Alert>
+                <Alert className='w-100' severity="error">{error}</Alert>
             }
         </div>
 
