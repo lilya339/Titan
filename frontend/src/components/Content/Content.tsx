@@ -17,7 +17,6 @@ export default function Content() {
 
     const onChangeQuotes = (e) => {
         const newCount = parseInt(e.target.value);
-
         setQuotesCount(Math.max(0, Math.min(MAX_COUNT, newCount)));
     }
 

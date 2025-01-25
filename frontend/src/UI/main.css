@@ -1,5 +1,6 @@
 #root {
     height: 100%;
+    font-family: "Segoe UI", Tahoma, Geneva, sans-serif;
     display: flex;
     justify-content: center;
 
@@ -10,6 +11,17 @@
 
         main {
             width: 100%;
+
+            header {
+                font-size: 2.5rem;
+                font-weight: 500;
+                padding: 1.5rem 1.5rem 0 1.5rem;
+                display: flex;
+                color: var(--text-dark);
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+
+                justify-content: center;
+            }
 
             .content {
                 width: 100%;
